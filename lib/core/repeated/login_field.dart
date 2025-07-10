@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 
 class LoginField extends StatelessWidget {
   final String label;
+  final TextEditingController controller;
   final bool isPass;
-  const LoginField({
-    super.key, 
-    required this.label, 
-    this.isPass = false
-    });
+  const LoginField({super.key, required this.label,required this.controller, this.isPass = false});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         hintText: label,
         hintStyle: TextStyle(
