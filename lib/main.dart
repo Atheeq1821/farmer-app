@@ -1,4 +1,5 @@
 import 'package:farmer_app/features/authentication/views/login_page.dart';
+import 'package:farmer_app/features/home/views/home-page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(),
+      home: const HomeView(),
     );
   }
 }

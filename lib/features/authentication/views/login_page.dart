@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
                       Image.asset(
                         'assets/logo/logo_svastha.png',
                         width: 298,
-                        height: 298,
+                        height: 298, 
                       ),
                     ],
                   ),
