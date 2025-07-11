@@ -92,24 +92,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           passwordController.text,
                           ref,
                         );
-                        if (result == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "Login failed: Usercode doesnt match",
-                              ),
-                            ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("LoggedIn Successfully")),
-                          );
-                          Navigator.pushReplacement(
-                            context, 
-                            MaterialPageRoute(builder: (_) => const MainScreen())
-                          );
-                        }
-                      },
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("LoggedIn Successfully")),
+                        );
+                        Navigator.pushReplacement(
+                          context, 
+                          MaterialPageRoute(builder: (_) => const MainScreen())
+                        );
+                                            },
                       child: Text(
                         "Continue",
                         style: TextStyle(
