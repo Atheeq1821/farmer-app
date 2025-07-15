@@ -16,7 +16,7 @@ class AuthController {
           .collection('users')
           .where('usercode', isEqualTo: userCode)
           .limit(1)
-          .get();
+          .get();                            
       if (querySnapshots.docs.isEmpty) {
         throw FirebaseAuthException(
           code: "user-not-found",
@@ -43,4 +43,6 @@ class AuthController {
   }
 
   Stream<User?> get authStateChanges => _auth.authStateChanges();
+
+  User? get currentUser => _auth.currentUser;
 }
