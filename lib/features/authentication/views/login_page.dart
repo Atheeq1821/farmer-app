@@ -86,27 +86,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
 
                     child: GestureDetector(
-                      onTap: () {
-                        Future<String?> result = login(
+                      onTap: () async{
+                        String? result =await login(
                           userController.text,
                           passwordController.text,
                           ref,
                         );
-                        if (result == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "Login failed: Usercode doesnt match",
-                              ),
-                            ),
-                          );
-                        } else {
+                        if (result == "Success") {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("LoggedIn Successfully")),
                           );
                           Navigator.pushReplacement(
-                            context, 
-                            MaterialPageRoute(builder: (_) => const MainScreen())
+      
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const MainScreen(),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                               result ??  "Login Failed",
+                              ),
+                            ),
                           );
                         }
                       },
