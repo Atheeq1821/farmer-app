@@ -1,6 +1,8 @@
 import 'package:farmer_app/core/themes/app_pallete.dart';
 import 'package:flutter/material.dart';
 
+import '../map_container/farmer_route_map.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -156,11 +158,14 @@ class _HomeViewState extends State<HomeView> {
                                   ]
                                 )
                               ],
-                            )
+                            ),
+
                           ],
                         ), 
                         
-                      )
+                      ),
+                      SizedBox(height: 30),
+                      FarmerRouteMap(),
               
                     ],
                   ),
