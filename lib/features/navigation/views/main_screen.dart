@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../Tab_views/AI_Page.dart';
+
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
   static final List<Widget> _pages = [
@@ -24,7 +26,17 @@ class MainScreen extends ConsumerWidget {
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,
-            onTap: (index) => ref.read(bottomNavProvider.notifier).state = index,
+            onTap: (index) {
+              if (index == 4) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const InputImagePage()),
+                );
+              } else {
+                ref.read(bottomNavProvider.notifier).state = index;
+              }
+            },
+
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.white70,
             items: [
