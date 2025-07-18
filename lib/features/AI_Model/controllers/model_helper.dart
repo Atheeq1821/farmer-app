@@ -1,14 +1,22 @@
 import 'dart:typed_data';
+import 'dart:math' as math;
 import 'package:flutter_onnxruntime/flutter_onnxruntime.dart';
 import 'package:image/image.dart' as img;
 
 class ModelHelper {
   late OnnxRuntime _ort;
-  late OrtSession _session; // Use OrtSession for the session type
+  late OrtSession _session;
 
   Future<void> loadModel() async {
     _ort = OnnxRuntime();
     _session = await _ort.createSessionFromAsset('assets/model/mobilenet_v3_quantized.onnx');
+  }
+
+  // Helper function for softmax
+  List<double> softmax(List<double> logits) {
+    final exps = logits.map((x) => math.exp(x)).toList();
+    final sumExps = exps.reduce((a, b) => a + b);
+    return exps.map((e) => e / sumExps).toList();
   }
 
   Future<String> runModelOnImage(Uint8List imageBytes) async {
@@ -17,7 +25,7 @@ class ModelHelper {
 
     img.Image resizedImage = img.copyResize(image, width: 224, height: 224);
 
-    // Create Float32 input [1, 3, 224, 224]
+    // Prepare input [1, 3, 224, 224]
     List<List<List<List<double>>>> input = List.generate(
       1, (_) => List.generate(
       3, (_) => List.generate(
@@ -38,10 +46,41 @@ class ModelHelper {
     final inputs = {
       'input': await OrtValue.fromList(input, [1, 3, 224, 224]),
     };
-    final outputs = await _session.run(inputs);  // Use _session here
-    final outputList = await outputs.values.first.asList();
+    final outputs = await _session.run(inputs);
 
-    int predictedIndex = outputList[0][0] > outputList[0][1] ? 0 : 1;
-    return predictedIndex == 0 ? "Leaf" : "Not a Leaf";
+    // Print all output tensors
+    print('Total outputs: ${outputs.length}');
+    for (final name in outputs.keys) {
+      final value = outputs[name];
+      final data = await value!.asList();
+      print("Output '$name': $data");
+    }
+
+    // For prediction, use the first output (update if your logic changes)
+    final firstOutput = await outputs.values.first.asList();
+    // Flatten: [ [x, y] ] -> [x, y]
+    List<double> flatLogits = (firstOutput as List)
+        .expand((v) => (v as List).cast<double>())
+        .toList();
+
+    // Print logits
+    print('Logits: $flatLogits');
+
+    // Calculate softmax probabilities
+    List<double> probs = softmax(flatLogits);
+    print('Softmax probabilities: $probs');
+
+    // Get highest probability and its class
+    int predictedIndex = probs.indexOf(probs.reduce(math.max));
+    double predictedProb = probs[predictedIndex];
+    int finalprobability = predictedProb.round();
+    print('finalprobability : $finalprobability');
+    String predictedClass = predictedProb*100 >= 70 ? "Leaf" : "Not a Leaf";
+
+    print('Predicted class: $predictedClass');
+    print('Probability for predicted class: $predictedProb');
+
+    // Optionally, return both the class and probability
+    return "$predictedClass (probability: ${(predictedProb * 100).toStringAsFixed(2)}%)";
   }
 }
