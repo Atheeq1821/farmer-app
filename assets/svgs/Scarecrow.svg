@@ -1,9 +1,19 @@
-<svg width="41" height="24" viewBox="0 0 41 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect y="0.0732422" width="41" height="23.2805" fill="url(#pattern0_191_603)"/>
-<defs>
-<pattern id="pattern0_191_603" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_191_603" transform="matrix(0.00630908 0 0 0.0111111 0.216092 0)"/>
-</pattern>
-<image id="image0_191_603" width="90" height="90" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAACQUlEQVR4nO3aP0scQRzG8SEBg1HQl2BhmhRJZe2b0Xdgb4LFXVKEIKQ1hSJoJ9hrZeFbSBEQVzv/kSpEvmFxBP/cyt3u3M7Ob54PXHPszs08/JidvRnnRERERLIGzAJ7wB/gAJgfcM074BC4BnbKe+L0NmHADx67AVaBD8BH4JP/7qFvsfudHOCU0RWx+50U7qaEup5NMVIBWG4Q9FJVu/IEsNUg6M2n7UnY+fme5umHgNfAZ+CX/6wB78s5lubmfVtlm7+Bc2AdeOtyA3ytCOkqQNBVbfx0uQEuad9f4I3LBfDKv/G17R8w6XICbEQIetflBpgul2LAbQsBl7+xDcy4XAFzwApwFDj0W99m2fZc7HF2CjAFLJRvd8B3YB84Bk6AC/8v3b1r/92Jv2bf37Pk25iKPR4RERGRDgEmgC/AWdVC9YV7QzkEFofo66K/Noga4yqAfplZnaD7Y+hQ0MBDBxxgXP06QRdj7FCjwMcVcIBxFVaCbkWDcZ2mPnW0qsG4enUfhv2XKltBB3gYNkHiXCpInEsFiXOpGGbF0mGjrxxiGWbF0mGjrxxiGWbF0kFxVg7jRiQuNyhoBW0KqmgFbQqqaAVtCqpoBW0KqmgFbQqqaAVtCqpoBW0KqmgFbQqqaAVtCqpoBW0KcXbI0zmzkfjZj57LDe2e/bB5ZkNEREQkXVSI3S9zUNAK2hRU0QraFFTRCtoUVNEK2hRU0QraFFTRrQVdDMg6v83WSJu5vdj9sr6ZW2izVURERMQN8B/dqPhsVvcGQAAAAABJRU5ErkJggg=="/>
-</defs>
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- License: CC Attribution. Made by wishforge.games: https://www.wishforge.games/ -->
+<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 32 32" xml:space="preserve">
+<path
+    stroke="#FFFFFF"
+    fill="#FFFFFF"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-miterlimit="10"
+    d="M28,10h-7c0-0.2,0-0.4,0-0.6C22.6,9,24,8.3,24,7c0-1.5-2-2.3-4-2.7V3c0-0.6-0.4-1-1-1h-6c-0.6,0-1,0.4-1,1v1.3
+	C10,4.7,8,5.5,8,7c0,1.3,1.4,2,3,2.4c0,0.2,0,0.4,0,0.6H4c-0.6,0-1,0.4-1,1v6c0,0.6,0.4,1,1,1h4.7L8,24.9c0,0.3,0.1,0.7,0.4,0.9
+	C8.6,26,9,26.1,9.3,25.9l0.3-0.1c1.3-0.4,2.7-0.1,3.7,0.9c0.2,0.2,0.4,0.3,0.7,0.3c0.1,0,0.1,0,0.2,0l0.8-0.2V30c0,0.6,0.4,1,1,1
+	s1-0.4,1-1v-3.6l2.2-0.4c0.1,0,0.2,0,0.3-0.1c1-0.5,2.1-0.5,3.1,0c0.3,0.2,0.7,0.1,1-0.1c0.3-0.2,0.5-0.6,0.4-0.9L23.3,18H28
+	c0.6,0,1-0.4,1-1v-6C29,10.4,28.6,10,28,10z M16,10c0.3,0,1.6,0,3-0.2c0,0.1,0,0.1,0,0.2c0,1.7-1.3,3-3,3s-3-1.3-3-3
+	c0-0.1,0-0.1,0-0.2C14.4,10,15.7,10,16,10z"/>
 </svg>

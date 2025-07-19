@@ -1,6 +1,8 @@
 import 'package:farmer_app/core/themes/app_pallete.dart';
 import 'package:flutter/material.dart';
 
+import '../map_container/farmer_route_map.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -40,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              decoration: BoxDecoration(color: AppPallete.color2),
+              decoration: BoxDecoration(color: Colors.blue),
               margin: EdgeInsets.zero,
               padding: EdgeInsets.all(12),
               child: Row(
@@ -49,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(Icons.close, color: Colors.white),
+                    icon: Icon(Icons.close, color: Colors.green),
                   ),
                   SizedBox(width: 20,),
                   Text(
@@ -156,11 +158,14 @@ class _HomeViewState extends State<HomeView> {
                                   ]
                                 )
                               ],
-                            )
+                            ),
+
                           ],
                         ), 
                         
-                      )
+                      ),
+                      SizedBox(height: 30),
+                      FarmerRouteMap(),
               
                     ],
                   ),
@@ -170,6 +175,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
       ),
+
     );
   }
 }
