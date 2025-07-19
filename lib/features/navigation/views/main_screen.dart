@@ -4,11 +4,12 @@ import 'package:farmer_app/features/navigation/controllers/bottom_nav_controller
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../Tab_views/AI_Page.dart';
+import '../../../Tab_views/Trip_Page.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
+
   static final List<Widget> _pages = [
     HomeView(),
   ];
@@ -18,91 +19,83 @@ class MainScreen extends ConsumerWidget {
     final currentIndex = ref.watch(bottomNavProvider);
 
     return Scaffold(
-      body: _pages[currentIndex],
-        bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(
-            canvasColor: AppPallete.color2,
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: currentIndex,
-            onTap: (index) {
-              if (index == 4) {
+      body: _pages[0], // Always show HomeView as base
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: AppPallete.color2,
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            switch (index) {
+              case 0:
+                ref.read(bottomNavProvider.notifier).state = 0;
+                break;
+              case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const InputImagePage()),
+                  MaterialPageRoute(builder: (_) => RiskAssessment()),
                 );
-              } else {
-                ref.read(bottomNavProvider.notifier).state = index;
-              }
-            },
-
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white70,
-            items: [
-              BottomNavigationBarItem(
-                icon:SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: SvgPicture.asset(
-                    'assets/svgs/Home.svg',
-                    // color: Colors.white, // required if you want to color it
-                  ),
-                ),
-                // icon: Icon(Icons.home_filled),
-                label: 'Home',
-                // backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon:SizedBox(
+                break;
+              case 2:
+              case 3:
+              // Add navigation logic for Inspect / Procure if needed
+                break;
+              case 4:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => InputImagePage()),
+                );
+                break;
+            }
+          },
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+          items: [
+            BottomNavigationBarItem(
+              icon: SizedBox(
                 width: 24,
                 height: 24,
-                child: SvgPicture.asset(
-                  'assets/svgs/Journey.svg',
-                  // color: Colors.white, // required if you want to color it
-                ),
+                child: SvgPicture.asset('assets/svgs/Home.svg'),
               ),
-                // icon: Icon(Icons.trip_origin),
-                label: 'Trip',
-              ),
-              BottomNavigationBarItem(
-                // icon: SvgPicture.asset('assets/svgs/Scarecrow.svg'),
-                icon: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: SvgPicture.asset(
-                    'assets/svgs/Scarecrow.svg',
-                    // color: Colors.white, // required if you want to color it
-                  ),
-                ),
-                label: 'Inspect',
-              ),
-              BottomNavigationBarItem(
-                icon:SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: SvgPicture.asset(
-                    'assets/svgs/Procure.svg',
-                    // color: Colors.white, // required if you want to color it
-                  ),
-                ),
-                label: 'Procure',
-              ),
-              BottomNavigationBarItem(
-                icon:SizedBox(
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
                 width: 24,
                 height: 24,
-                child: SvgPicture.asset(
-                  'assets/svgs/Camera.svg',
-                  // color: Colors.white, // required if you want to color it
-                ),
+                child: SvgPicture.asset('assets/svgs/Journey.svg'),
               ),
-                label: 'AI',
+              label: 'Trip',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 24,
+                height: 24,
+                child: SvgPicture.asset('assets/svgs/Scarecrow.svg'),
               ),
-            ],
-          ),
-        )
-
+              label: 'Inspect',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 24,
+                height: 24,
+                child: SvgPicture.asset('assets/svgs/Procure.svg'),
+              ),
+              label: 'Procure',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                width: 24,
+                height: 24,
+                child: SvgPicture.asset('assets/svgs/Camera.svg'),
+              ),
+              label: 'AI',
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -52,6 +52,8 @@ dependencies:
   path_provider: ^2.0.15
   image_picker: ^1.0.4
   flutter_onnxruntime: ^1.4.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +90,7 @@ flutter:
     - assets/svgs/Procure.svg
     - assets/model/model.tflite
     - assets/model/mobilenet_v3_quantized.onnx
+    - assets/model/mobilenet_v3_severity_quantized.onnx
 
   fonts:
     - family: SFProDisplay

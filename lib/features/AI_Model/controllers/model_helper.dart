@@ -6,13 +6,14 @@ import 'package:image/image.dart' as img;
 class ModelHelper {
   late OnnxRuntime _ort;
   late OrtSession _session;
+  late OrtSession _severitySession;
 
   Future<void> loadModel() async {
     _ort = OnnxRuntime();
     _session = await _ort.createSessionFromAsset('assets/model/mobilenet_v3_quantized.onnx');
+    _severitySession = await _ort.createSessionFromAsset('assets/model/mobilenet_v3_severity_quantized.onnx');
   }
 
-  // Helper function for softmax
   List<double> softmax(List<double> logits) {
     final exps = logits.map((x) => math.exp(x)).toList();
     final sumExps = exps.reduce((a, b) => a + b);
@@ -46,41 +47,45 @@ class ModelHelper {
     final inputs = {
       'input': await OrtValue.fromList(input, [1, 3, 224, 224]),
     };
+
     final outputs = await _session.run(inputs);
-
-    // Print all output tensors
-    print('Total outputs: ${outputs.length}');
-    for (final name in outputs.keys) {
-      final value = outputs[name];
-      final data = await value!.asList();
-      print("Output '$name': $data");
-    }
-
-    // For prediction, use the first output (update if your logic changes)
     final firstOutput = await outputs.values.first.asList();
-    // Flatten: [ [x, y] ] -> [x, y]
+
     List<double> flatLogits = (firstOutput as List)
         .expand((v) => (v as List).cast<double>())
         .toList();
 
-    // Print logits
-    print('Logits: $flatLogits');
-
-    // Calculate softmax probabilities
     List<double> probs = softmax(flatLogits);
-    print('Softmax probabilities: $probs');
-
-    // Get highest probability and its class
     int predictedIndex = probs.indexOf(probs.reduce(math.max));
     double predictedProb = probs[predictedIndex];
-    int finalprobability = predictedProb.round();
-    print('finalprobability : $finalprobability');
-    String predictedClass = predictedProb*100 >= 70 ? "Leaf" : "Not a Leaf";
+    String predictedClass = predictedProb * 100 >= 70 ? "Leaf" : "Not a Leaf";
 
     print('Predicted class: $predictedClass');
     print('Probability for predicted class: $predictedProb');
 
-    // Optionally, return both the class and probability
-    return "$predictedClass (probability: ${(predictedProb * 100).toStringAsFixed(2)}%)";
+    if (predictedClass == "Leaf") {
+      // Run severity model
+      final severityOutputs = await _severitySession.run(inputs);
+      final severityRaw = await severityOutputs.values.first.asList();
+
+      List<double> severityLogits = (severityRaw as List)
+          .expand((v) => (v as List).cast<double>())
+          .toList();
+
+      List<double> severityProbs = softmax(severityLogits);
+      int severityIndex = severityProbs.indexOf(severityProbs.reduce(math.max));
+
+      print('[INFO] Inference Results:');
+      print(" - Output 'output': shape=(1, ${severityLogits.length}), dtype=float32");
+      print("   Raw Output: $severityLogits");
+      print("   Softmax Probabilities: $severityProbs");
+      print("   Predicted Class: $severityIndex -> severity_$severityIndex");
+
+      return "$predictedClass (probability: ${(predictedProb * 100).toStringAsFixed(2)}%) | Severity: severity_$severityIndex";
+    } else {
+      return "Not a Leaf. Please retake the picture.";
+    }
   }
+
 }
+
