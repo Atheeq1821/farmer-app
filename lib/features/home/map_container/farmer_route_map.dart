@@ -113,7 +113,7 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
         SizedBox(height: 20),
         Container(
           height: 300,
-          width: 350,
+          width: 400,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -135,9 +135,10 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
         SizedBox(height: 30),
         ElevatedButton.icon(
           onPressed: _launchMultiStopNavigation,
-          icon: Icon(Icons.navigation),
-          label: Text("Start Navigation"),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+          icon: Icon(Icons.navigation,color: Colors.black,),
+
+          label: Text("Start Trip",style: TextStyle(color: Colors.black),),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow[700]),
         ),
       ],
     );
