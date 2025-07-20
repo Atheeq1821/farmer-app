@@ -133,13 +133,14 @@ class _ViewRiskAssessmentScreenState extends State<ViewRiskAssessmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Saved Assessments"),
+        title: Text("Saved Assessments",style: TextStyle(color: AppPallete.bgColor),),
         backgroundColor: Colors.green[800],
         actions: [
           IconButton(
             icon: Icon(Icons.cloud_upload),
             tooltip: "Upload All",
             onPressed: _uploadAllEntries,
+            color: AppPallete.bgColor,
           )
         ],
       ),

@@ -159,13 +159,14 @@ class _HomeViewState extends State<HomeView> {
                                 )
                               ],
                             ),
+                            FarmerRouteMap(),
 
                           ],
                         ), 
                         
                       ),
                       SizedBox(height: 30),
-                      FarmerRouteMap(),
+
               
                     ],
                   ),

@@ -179,6 +179,7 @@ class _RiskAssessmentState extends State<RiskAssessment> {
             fit: BoxFit.contain,
             height: 32,
           ),
+
         ),
         backgroundColor: AppPallete.color2,
       ),

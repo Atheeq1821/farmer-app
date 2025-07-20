@@ -113,6 +113,7 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
         SizedBox(height: 20),
         Container(
           height: 300,
+          width: 350,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -131,7 +132,7 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 30),
         ElevatedButton.icon(
           onPressed: _launchMultiStopNavigation,
           icon: Icon(Icons.navigation),
