@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:farmer_app/core/themes/app_pallete.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'dart:math';
 
 import 'Rough_viewriskassessment.dart';
 
@@ -18,6 +22,8 @@ class _RiskAssessmentState extends State<RiskAssessment> {
   String? seedType;
   String? landMethod;
   String? farmerCorrect;
+  File? _capturedImage;
+  String? _imageBase64;
 
   final List<String> cropOptions = ['Paddy', 'Wheat', 'Millet'];
   final List<String> prevCropOptions = ['Cotton', 'Sugarcane', 'Groundnut'];
@@ -32,6 +38,88 @@ class _RiskAssessmentState extends State<RiskAssessment> {
     final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
     await Hive.openBox("risk_assessment");
+  }
+
+
+  Future<void> _captureImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      final imageTemp = File(pickedFile.path);
+      final bytes = await imageTemp.readAsBytes();
+      setState(() {
+        _capturedImage = imageTemp;
+        _imageBase64 = base64Encode(bytes);
+      });
+    }
+  }
+
+
+
+
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  void _saveDataToHive() async {
+    _showLoadingDialog();
+    try {
+      final box = Hive.box("risk_assessment");
+
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) throw "Location services are disabled.";
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) throw "Location permission denied.";
+      }
+      if (permission == LocationPermission.deniedForever) {
+        throw "Location permission permanently denied.";
+      }
+
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      List existingList = box.get("entries", defaultValue: []);
+
+      existingList.add({
+        "cropVariety": cropVariety,
+        "previousCrop": previousCrop,
+        "seedType": seedType,
+        "landMethod": landMethod,
+        "farmerCorrect": farmerCorrect,
+        "imageBase64": _imageBase64,
+        "timestamp": DateTime.now().toIso8601String(),
+        "latitude": position.latitude.toString(),
+        "longitude": position.longitude.toString(),
+      });
+
+      await box.put("entries", existingList);
+
+      Navigator.of(context).pop();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Assessment saved!")),
+      );
+
+      setState(() {
+        cropVariety = null;
+        previousCrop = null;
+        seedType = null;
+        landMethod = null;
+        farmerCorrect = null;
+        _capturedImage = null;
+        _imageBase64 = null;
+      });
+    } catch (e) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
   }
 
   Widget buildDropdown(String hint, List<String> options, String? value,
@@ -73,40 +161,11 @@ class _RiskAssessmentState extends State<RiskAssessment> {
     );
   }
 
-  void _saveDataToHive() async {
-    final box = Hive.box("risk_assessment");
-    List existingList = box.get("entries", defaultValue: []);
-
-    existingList.add({
-      "cropVariety": cropVariety,
-      "previousCrop": previousCrop,
-      "seedType": seedType,
-      "landMethod": landMethod,
-      "farmerCorrect": farmerCorrect,
-      "timestamp": DateTime.now().toIso8601String(),
-      "isUploaded": false,
-    });
-
-    await box.put("entries", existingList);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Assessment saved!")),
-    );
-
-    setState(() {
-      cropVariety = null;
-      previousCrop = null;
-      seedType = null;
-      landMethod = null;
-      farmerCorrect = null;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Risk-Assessment",style: TextStyle(color: AppPallete.bgColor)),
+        title: Text("Risk-Assessment", style: TextStyle(color: AppPallete.bgColor)),
         actions: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
@@ -167,9 +226,40 @@ class _RiskAssessmentState extends State<RiskAssessment> {
                 farmerCorrect, (val) => setState(() => farmerCorrect = val)),
 
             SizedBox(height: 30),
+
+            Text("6. Capture a photo of the crop/field"),
+            SizedBox(height: 8),
+            ElevatedButton.icon(
+              onPressed: _captureImage,
+              icon: Icon(Icons.camera_alt),
+              label: Text("Capture Image"),
+              style: ElevatedButton.styleFrom(backgroundColor: AppPallete.color2),
+            ),
+            if (_capturedImage != null) ...[
+              SizedBox(height: 10),
+              Center(
+                child: Container(
+                  height: 150,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.green.shade200),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      _capturedImage!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: _saveDataToHive,
-              child: Text("Save Assessment",style: TextStyle(color: AppPallete.color2),),
+              child: Text("Save Assessment", style: TextStyle(color: AppPallete.color2)),
             ),
             ElevatedButton(
               onPressed: () {
@@ -178,7 +268,7 @@ class _RiskAssessmentState extends State<RiskAssessment> {
                   MaterialPageRoute(builder: (_) => ViewRiskAssessmentScreen()),
                 );
               },
-              child: Text("View Saved Data",style: TextStyle(color: AppPallete.color2)),
+              child: Text("View Saved Data", style: TextStyle(color: AppPallete.color2)),
             ),
           ],
         ),
