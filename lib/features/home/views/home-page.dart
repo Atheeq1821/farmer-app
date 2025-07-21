@@ -1,4 +1,5 @@
 import 'package:farmer_app/core/themes/app_pallete.dart';
+import 'package:farmer_app/features/home/views/page_navi.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -156,11 +157,31 @@ class _HomeViewState extends State<HomeView> {
                                   ]
                                 )
                               ],
-                            )
+                            ),
+                            
                           ],
                         ), 
                         
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PageNavigation(),
+                          PageNavigation(),
+                          PageNavigation(),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PageNavigation(),
+                          PageNavigation(),
+                          PageNavigation(),
+                        ],
                       )
+
               
                     ],
                   ),
