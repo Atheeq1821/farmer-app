@@ -89,6 +89,18 @@ flutter:
     - assets/svgs/Scarecrow.svg
     - assets/svgs/Camera.svg
     - assets/svgs/Procure.svg
+    - assets/svgs/Field.svg
+    - assets/svgs/Addnew.svg
+    - assets/svgs/Pending.svg
+    - assets/svgs/Allfarmers.svg
+    - assets/svgs/Risk.svg
+    - assets/svgs/Mywork.svg
+    - assets/svgs/Tractor.svg
+    - assets/svgs/Semi_Truck.svg
+    - assets/svgs/Leaf.svg
+    - assets/svgs/Spray.svg
+    - assets/svgs/Harvest.svg
+    - assets/svgs/Sowing.svg
     - assets/model/model.tflite
     - assets/model/mobilenet_v3_quantized.onnx
     - assets/model/mobilenet_v3_severity_quantized.onnx

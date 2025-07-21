@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../HomeGrid_Icon_ViewPages/All_Farmers.dart';
 import '../map_container/farmer_route_map.dart';
 import 'package:farmer_app/core/themes/app_pallete.dart';
@@ -176,9 +177,9 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisSpacing: 16,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
-                    dashboardItem(Icons.track_changes, "My Farmers"),
-                    dashboardItem(Icons.add_box, "Add New"),
-                    dashboardItem(Icons.pedal_bike, "Pending"),
+                    dashboardItem(SvgPicture.asset('assets/svgs/Field.svg',height: 50,width: 50,) , "My Farmers"),
+                    dashboardItem(SvgPicture.asset('assets/svgs/Addnew.svg',height: 50,width: 50,) , "Add New"),
+                    dashboardItem(SvgPicture.asset('assets/svgs/Pending.svg',height: 50,width: 50,), "Pending"),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -186,10 +187,10 @@ class _HomeViewState extends State<HomeView> {
                           MaterialPageRoute(builder: (context) => const AllFarmersScreen()),
                         );
                       },
-                      child: dashboardItem(Icons.groups, "All Farmers"),
+                      child: dashboardItem(SvgPicture.asset('assets/svgs/Allfarmers.svg',height: 50,width: 50,), "All Farmers"),
                     ),
-                    dashboardItem(Icons.warning_amber, "Risk Manage"),
-                    dashboardItem(Icons.work_history, "My works"),
+                    dashboardItem(SvgPicture.asset('assets/svgs/Risk.svg',height: 50,width: 50,), "Risk Manage"),
+                    dashboardItem(SvgPicture.asset('assets/svgs/Mywork.svg',height: 50,width: 50,), "My works"),
                   ],
                 ),
               ],
@@ -205,59 +206,36 @@ class _HomeViewState extends State<HomeView> {
     child: Text(text, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
   );
 
-  Widget dashboardItem(IconData iconData, String title) {
+  Widget dashboardItem(Widget iconWidget, String title) {
     return Container(
-      width: 120,
-      height: 120,
-      // margin: const EdgeInsets.all(5),
-
+      padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
       decoration: BoxDecoration(
-        color: AppPallete.bgColor,
-        borderRadius: BorderRadius.circular(24),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Container(
-
-              decoration: BoxDecoration(
-              color: AppPallete.color1,
-                borderRadius: BorderRadius.circular(18)
-              ),  
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                iconData,
-                size: 48,
-                color: Colors.white,
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                height: 30,
-                // padding: const EdgeInsets.symmetric(vertical: 13),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(0),
-                    top: Radius.circular(4)
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(30, 18, 30, 18),
+            decoration: BoxDecoration(
+              color: AppPallete.color2,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: iconWidget, // Use passed widget here
           ),
-        ),
+          SizedBox(height: 2),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 15,
+              color: AppPallete.color2,
+            ),
+          ),
+        ],
       ),
     );
   }
+
 }

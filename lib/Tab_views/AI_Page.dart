@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../core/themes/app_pallete.dart';
 import '../features/AI_Model/controllers/model_helper.dart';
 
 class InputImagePage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _InputImagePageState extends State<InputImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Leaf Detector')),
+      appBar: AppBar(title: Text('Leaf Detector',style: TextStyle(color: AppPallete.bgColor),),backgroundColor: AppPallete.color2,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -86,13 +87,13 @@ class _InputImagePageState extends State<InputImagePage> {
               children: [
                 ElevatedButton.icon(
                   onPressed: () => _pickImage(ImageSource.camera),
-                  icon: const Icon(Icons.camera_alt),
-                  label: const Text('Camera'),
+                  icon: Icon(Icons.camera_alt,color: AppPallete.color4,),
+                  label: Text('Camera',style: TextStyle(color: AppPallete.color4),),
                 ),
                 ElevatedButton.icon(
                   onPressed: () => _pickImage(ImageSource.gallery),
-                  icon: const Icon(Icons.photo_library),
-                  label: const Text('Gallery'),
+                  icon: Icon(Icons.photo_library,color: AppPallete.color4,),
+                  label: Text('Gallery',style:TextStyle(color: AppPallete.color4,)),
                 ),
               ],
             )
