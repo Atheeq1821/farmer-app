@@ -75,7 +75,6 @@ class InspectPage extends StatelessWidget {
                 offset: const Offset(0, -12),
                 child: Container(
                   padding: EdgeInsets.fromLTRB(19, 10,19,10),
-                  height: 70,
                   decoration: BoxDecoration(
                     color: AppPallete.color2,
                     borderRadius: BorderRadius.circular(20)
@@ -95,9 +94,15 @@ class InspectPage extends StatelessWidget {
                           Icon(Icons.access_alarms,color: Colors.white,size: 35,)
                         ],
                       ),
+                      SizedBox(height: 10,),
                       Container(
-                        
-                        child: Text(""),
+                         width: double.infinity,
+                         height: 7,
+                         decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(10)
+                         ),
+    
                       )
                     ],
                   ),
