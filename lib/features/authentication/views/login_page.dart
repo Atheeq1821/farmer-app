@@ -5,6 +5,8 @@ import 'package:farmer_app/features/navigation/views/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../home/views/home-page.dart';
+
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
@@ -100,7 +102,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const MainScreen(),
+                              builder: (_) => const HomeView(),
                             ),
                           );
                         } else {

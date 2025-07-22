@@ -1,7 +1,7 @@
 import 'package:farmer_app/core/themes/app_pallete.dart';
 import 'package:flutter/material.dart';
-import '../Trip_page/Trip_Page.dart';
 import 'Inspect_Container.dart';
+import 'Inspect_Form/Trip_Page.dart';
 
 class InspectPage extends StatelessWidget {
   const InspectPage({super.key});
@@ -24,11 +24,8 @@ class InspectPage extends StatelessWidget {
         ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.green.shade800, Colors.green.shade300],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+            image: DecorationImage(image: AssetImage('assets/elements/Background.png'),fit: BoxFit.fill)
+
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 15, 10, 20),
@@ -40,7 +37,7 @@ class InspectPage extends StatelessWidget {
                     "INSPECT",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: AppPallete.bgColor,
+                      color: AppPallete.color2,
                       fontSize: 30,
                     ),
                   ),

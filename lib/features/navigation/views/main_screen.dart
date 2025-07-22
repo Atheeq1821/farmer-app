@@ -6,8 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../Tab_views/AI_Page.dart';
 import '../../../Tab_views/Inspect_page/Inspect.dart';
-import '../../../Tab_views/Trip_page/Trip_Page.dart';
-
+import '../../../Tab_views/Inspect_page/Inspect_Form/Trip_Page.dart';
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
 

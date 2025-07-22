@@ -75,12 +75,10 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       body: Container(
+
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.green.shade800, Colors.green.shade300],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          image: DecorationImage(image: AssetImage('assets/elements/Background.png'),fit: BoxFit.fill)
+
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -91,18 +89,18 @@ class _HomeViewState extends State<HomeView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Welcome user name", style: TextStyle(color: Colors.white)),
-                    Text("Role in Svastha", style: TextStyle(color: Colors.white)),
+                    Text("Welcome user name", style: TextStyle(color: AppPallete.color2)),
+                    Text("Role in Svastha", style: TextStyle(color: AppPallete.color2)),
                   ],
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'TODAYS FARMERS ENROLEMENT',
+                  'TODAY\'S FARMERS ENROLEMENT',
                   style: TextStyle(
                     fontFamily: 'SFProDisplay',
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    fontSize: 22,
+                    color: AppPallete.color2,
+                    fontSize: 25,
                   ),
                 ),
                 SizedBox(height: 16),
@@ -168,7 +166,16 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 SizedBox(height: 12),
-                FarmerRouteMap(),
+                SizedBox(
+                  height: 400,
+                  child: GestureDetector(
+                    onVerticalDragDown: (_) {},
+                    onVerticalDragUpdate: (_) {},
+                    onVerticalDragEnd: (_) {},
+                    child: FarmerRouteMap(),
+                  ),
+                ),
+
                 SizedBox(height: 30),
                 GridView.count(
                   shrinkWrap: true,

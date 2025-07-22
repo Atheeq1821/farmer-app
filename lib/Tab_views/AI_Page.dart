@@ -56,48 +56,53 @@ class _InputImagePageState extends State<InputImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Leaf Detector',style: TextStyle(color: AppPallete.bgColor),),backgroundColor: AppPallete.color2,),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            if (_imageBytes != null)
-              Column(
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage('assets/elements/Background.png'),fit: BoxFit.fill)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              if (_imageBytes != null)
+                Column(
+                  children: [
+                    Image.memory(_imageBytes!, height: 250),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _loading ? null : _runModel,
+                      child: _loading
+                          ? const CircularProgressIndicator()
+                          : const Text('Proceed'),
+                    ),
+                  ],
+                )
+              else
+                Text('Please select or capture an image.',style: TextStyle(fontSize: 25,color: Color.fromRGBO(0, 0, 0, 100),fontWeight: FontWeight.bold),),
+              const SizedBox(height: 20),
+              if (_prediction != null)
+                Text(
+                  'Prediction: $_prediction',
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.memory(_imageBytes!, height: 250),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _loading ? null : _runModel,
-                    child: _loading
-                        ? const CircularProgressIndicator()
-                        : const Text('Proceed'),
+                  ElevatedButton.icon(
+                    onPressed: () => _pickImage(ImageSource.camera),
+                    icon: Icon(Icons.camera_alt,color: AppPallete.color4,),
+                    label: Text('Camera',style: TextStyle(color: AppPallete.color4),),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => _pickImage(ImageSource.gallery),
+                    icon: Icon(Icons.photo_library,color: AppPallete.color4,),
+                    label: Text('Gallery',style:TextStyle(color: AppPallete.color4,)),
                   ),
                 ],
               )
-            else
-              const Text('Please select or capture an image.'),
-            const SizedBox(height: 20),
-            if (_prediction != null)
-              Text(
-                'Prediction: $_prediction',
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () => _pickImage(ImageSource.camera),
-                  icon: Icon(Icons.camera_alt,color: AppPallete.color4,),
-                  label: Text('Camera',style: TextStyle(color: AppPallete.color4),),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => _pickImage(ImageSource.gallery),
-                  icon: Icon(Icons.photo_library,color: AppPallete.color4,),
-                  label: Text('Gallery',style:TextStyle(color: AppPallete.color4,)),
-                ),
-              ],
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
