@@ -28,7 +28,7 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
   Set<Marker> _markers = {};
   List<LatLng> polylineCoordinates = [];
   Set<Polyline> _polylines = {};
-  final String googleAPIKey = 'YOUR_GOOGLE_API_KEY'; // Replace this
+  final String googleAPIKey = 'AIzaSyCfaOlzOME-gQcLszO880_63wt-J8QjA-8'; // Replace this
 
   @override
   void initState() {
@@ -80,9 +80,19 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
 
   void _launchMultiStopNavigation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition();
-      String origin = "${position.latitude},${position.longitude}";
+      print('hi');
+      // Position position = await Geolocator.getCurrentPosition();
+      String clat = "12.7797273";
+      String clong = "78.712722";
+      print('hi');
+
+      // String origin = "${position.latitude},${position.longitude}";
+      String origin = "${clat},${clong}";
+      print('${clat},${clong}');
+
       String destination = "${farmerLocations.last.latitude},${farmerLocations.last.longitude}";
+      print('hi');
+
       String waypoints = farmerLocations
           .sublist(0, farmerLocations.length - 1)
           .map((e) => "${e.latitude},${e.longitude}")
@@ -90,12 +100,14 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
 
       final url = Uri.encodeFull(
           "https://www.google.com/maps/dir/?api=1&origin=$origin&destination=$destination&waypoints=$waypoints&travelmode=driving");
+      print('hi');
 
       final intent = AndroidIntent(
         action: 'android.intent.action.VIEW',
         data: url,
         package: 'com.google.android.apps.maps',
       );
+      print('hi');
 
       await intent.launch();
     } catch (e) {

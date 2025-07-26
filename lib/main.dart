@@ -1,16 +1,14 @@
 import 'package:farmer_app/features/authentication/views/login_page.dart';
 import 'package:farmer_app/features/home/views/home-page.dart';
 import 'package:farmer_app/features/navigation/views/main_screen.dart';
-import 'package:farmer_app/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/authentication/supabase_client.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await SupabaseConfig.initialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainScreen(), 
+      home: const LoginPage(),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:farmer_app/core/themes/app_pallete.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
@@ -69,19 +68,19 @@ class _RiskAssessmentState extends State<RiskAssessment> {
     try {
       final box = Hive.box("risk_assessment");
 
-      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) throw "Location services are disabled.";
-
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) throw "Location permission denied.";
-      }
-      if (permission == LocationPermission.deniedForever) {
-        throw "Location permission permanently denied.";
-      }
-
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      // bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      // if (!serviceEnabled) throw "Location services are disabled.";
+      //
+      // LocationPermission permission = await Geolocator.checkPermission();
+      // if (permission == LocationPermission.denied) {
+      //   permission = await Geolocator.requestPermission();
+      //   if (permission == LocationPermission.denied) throw "Location permission denied.";
+      // }
+      // if (permission == LocationPermission.deniedForever) {
+      //   throw "Location permission permanently denied.";
+      // }
+      //
+      // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
       List existingList = box.get("entries", defaultValue: []);
 
@@ -93,8 +92,8 @@ class _RiskAssessmentState extends State<RiskAssessment> {
         "farmerCorrect": farmerCorrect,
         "imageBase64": _imageBase64,
         "timestamp": DateTime.now().toIso8601String(),
-        "latitude": position.latitude.toString(),
-        "longitude": position.longitude.toString(),
+        // "latitude": position.latitude.toString(),
+        // "longitude": position.longitude.toString(),
       });
 
       await box.put("entries", existingList);
