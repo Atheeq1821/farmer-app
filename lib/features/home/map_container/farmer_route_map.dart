@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart'; // Required for gesture recognizers
 
 class FarmerRouteMap extends StatefulWidget {
   const FarmerRouteMap({Key? key}) : super(key: key);
@@ -80,18 +82,9 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
 
   void _launchMultiStopNavigation() async {
     try {
-      print('hi');
       Position position = await Geolocator.getCurrentPosition();
-      String clat = "12.7797273";
-      String clong = "78.712722";
-      print('hi');
-
       String origin = "${position.latitude},${position.longitude}";
-      // String origin = "${clat},${clong}";
-      // print('${clat},${clong}');
-
       String destination = "${farmerLocations.last.latitude},${farmerLocations.last.longitude}";
-      print('hi');
 
       String waypoints = farmerLocations
           .sublist(0, farmerLocations.length - 1)
@@ -100,14 +93,12 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
 
       final url = Uri.encodeFull(
           "https://www.google.com/maps/dir/?api=1&origin=$origin&destination=$destination&waypoints=$waypoints&travelmode=driving");
-      print('hi');
 
       final intent = AndroidIntent(
         action: 'android.intent.action.VIEW',
         data: url,
         package: 'com.google.android.apps.maps',
       );
-      print('hi');
 
       await intent.launch();
     } catch (e) {
@@ -122,7 +113,7 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Container(
           height: 300,
           width: 400,
@@ -131,25 +122,32 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: farmerLocations[0],
-                zoom: 12,
+            child: GestureDetector(
+              onVerticalDragUpdate: (_) {}, // Blocks scroll gesture from parent
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: farmerLocations[0],
+                  zoom: 12,
+                ),
+                markers: _markers,
+                polylines: _polylines,
+                onMapCreated: (controller) => _mapController = controller,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                  Factory<OneSequenceGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                  ),
+                },
               ),
-              markers: _markers,
-              polylines: _polylines,
-              onMapCreated: (controller) => _mapController = controller,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: false,
             ),
           ),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         ElevatedButton.icon(
           onPressed: _launchMultiStopNavigation,
-          icon: Icon(Icons.navigation,color: Colors.black,),
-
-          label: Text("Start Trip",style: TextStyle(color: Colors.black),),
+          icon: const Icon(Icons.navigation, color: Colors.black),
+          label: const Text("Start Trip", style: TextStyle(color: Colors.black)),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow[700]),
         ),
       ],

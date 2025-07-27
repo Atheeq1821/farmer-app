@@ -98,7 +98,6 @@ flutter:
     - assets/svgs/Spray.svg
     - assets/svgs/Harvest.svg
     - assets/svgs/Sowing.svg
-    - assets/model/model.tflite
     - assets/model/mobilenet_v3_quantized.onnx
     - assets/model/mobilenet_v3_severity_quantized.onnx
 
