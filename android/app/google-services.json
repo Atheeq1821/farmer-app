@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1063266749253",
+    "firebase_url": "https://svastha-f2785-default-rtdb.firebaseio.com",
+    "project_id": "svastha-f2785",
+    "storage_bucket": "svastha-f2785.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063266749253:android:2fe7e8aa2c0640677b8c2c",
+        "android_client_info": {
+          "package_name": "com.example.farmer_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTmVODJ-ZJ26Fmq6PbEB0UWnt_uVmG_QY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063266749253:android:2b30378905b905987b8c2c",
+        "android_client_info": {
+          "package_name": "com.example.svastha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTmVODJ-ZJ26Fmq6PbEB0UWnt_uVmG_QY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
