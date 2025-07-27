@@ -130,7 +130,7 @@ class _AllFarmersScreenState extends State<AllFarmersScreen> {
                                       height: 4,
                                       margin: const EdgeInsets.only(bottom: 12),
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[300],
+                                        color: AppPallete.color1,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),

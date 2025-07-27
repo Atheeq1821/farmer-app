@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../HomeGrid_Icon_ViewPages/All_Farmers.dart';
+import '../../authentication/Auth_Service.dart';
 import '../map_container/farmer_route_map.dart';
 import 'package:farmer_app/core/themes/app_pallete.dart';
 
@@ -41,9 +42,9 @@ class _HomeViewState extends State<HomeView> {
           Builder(
             builder: (context) => IconButton(
               onPressed: () {
-                Scaffold.of(context).openEndDrawer();
+                logout(context);
               },
-              icon: Icon(Icons.menu, color: Colors.white),
+              icon: Icon(Icons.logout, color: Colors.white),
             ),
           ),
         ],

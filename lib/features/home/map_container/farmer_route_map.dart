@@ -81,14 +81,14 @@ class _FarmerRouteMapState extends State<FarmerRouteMap> {
   void _launchMultiStopNavigation() async {
     try {
       print('hi');
-      // Position position = await Geolocator.getCurrentPosition();
+      Position position = await Geolocator.getCurrentPosition();
       String clat = "12.7797273";
       String clong = "78.712722";
       print('hi');
 
-      // String origin = "${position.latitude},${position.longitude}";
-      String origin = "${clat},${clong}";
-      print('${clat},${clong}');
+      String origin = "${position.latitude},${position.longitude}";
+      // String origin = "${clat},${clong}";
+      // print('${clat},${clong}');
 
       String destination = "${farmerLocations.last.latitude},${farmerLocations.last.longitude}";
       print('hi');

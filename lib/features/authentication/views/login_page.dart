@@ -3,9 +3,9 @@ import 'package:farmer_app/core/themes/app_pallete.dart';
 import 'package:farmer_app/features/navigation/views/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../home/views/home-page.dart';
 import '../Auth_Service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -22,7 +22,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true, // important
-      backgroundColor: AppPallete.bgColor,
+      // backgroundColor: AppPallete.bgColor,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -32,16 +32,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         child: Stack(
           children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Image.asset('assets/elements/Ellipse26.png'),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Image.asset('assets/elements/Ellipse25.png'),
-            ),
+            // Positioned(
+            //   top: 0,
+            //   right: 0,
+            //   child: Image.asset('assets/elements/Ellipse26.png'),
+            // ),
+            // Positioned(
+            //   bottom: 0,
+            //   left: 0,
+            //   child: Image.asset('assets/elements/Ellipse25.png'),
+            // ),
             SafeArea(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(30.0),
@@ -85,9 +85,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           alignment: Alignment.topRight,
                           child: Text("Forgot Password?"),
                         ),
-                        Spacer(),
+                        // Spacer(),
                         Align(
-                          alignment: Alignment.topRight,
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
                               String? result = await login(
@@ -96,6 +96,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 ref,
                               );
                               if (result == "Success") {
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setBool('isLoggedIn', true);
+                                await prefs.setString('loginTime', DateTime.now().toIso8601String());
+
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text("Logged in successfully")),
                                 );
@@ -103,7 +107,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   context,
                                   MaterialPageRoute(builder: (_) => MainScreen()),
                                 );
-                              } else {
+                              }
+                              else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(result ?? "Login Failed")),
                                 );

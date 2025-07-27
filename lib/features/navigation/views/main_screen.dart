@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../Tab_views/AI_Page.dart';
 import '../../../Tab_views/Inspect_page/Inspect.dart';
-import '../../../Tab_views/Inspect_page/Inspect_Form/Trip_Page.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -35,10 +34,10 @@ class MainScreen extends ConsumerWidget {
                 ref.read(bottomNavProvider.notifier).state = 0;
                 break;
               case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => RiskAssessment()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (_) => RiskAssessment()),
+                // );
                 break;
               case 2:
                 Navigator.push(context, MaterialPageRoute(builder: (_)=> InspectPage()));

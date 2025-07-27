@@ -4,6 +4,7 @@ import 'package:farmer_app/features/navigation/views/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/authentication/auth_checker.dart';
 import 'features/authentication/supabase_client.dart';
 
 void main() async {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(),
+      home: AuthChecker(),
     );
   }
 }
